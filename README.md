@@ -5,15 +5,17 @@ Experiments with Langchain, OpenAI API, Embedding, and Agents
 
 ### Restaurant Advisor
 
-This chat-bot is aware of restaurant database in MongoDB and is capable of finding the best one nearby. It combines vector semantic search with geo-location MongoDb Atlas Index search. It is quite awesome:
+This chatbot is aware of restaurant database in MongoDB and is capable of finding the best one nearby. It combines vector semantic search with geo-location MongoDb Atlas Index search. It is quite awesome:
 I will add more details of how to setup it and how to configure a free MongoDb Cloud database cluster with search indexes.
+
+It supports StreamLit and Flask servers.
 
 ![restaurant-advisor.png](images/restaurant-advisor.png)
 
 ### AI Girlfriend
 
 A simple chat using Langchain, Streamlit, and OpenAI API. It uses a prompt to add some personality to the ChatGPT and make use it has some memory of the conversation. And it can voice-talk almost like a real human using Elevenlabs API.  
-I use [Elevenlabs](https://elevenlabs.io/speech-synthesis) to generate a voice and [FlowGPT](https://flowgpt.com/) to generate prompts
+I use the [Elevenlabs](https://elevenlabs.io/speech-synthesis) API (which is free) to generate a voice in a browser (StreamLit allows to play it). The [FlowGPT](https://flowgpt.com/) service was helpful to come up with a prompt. The voice is very impressive.
 
 ![ai-girlfriend.png](images/ai-girlfriend.png)
 
@@ -75,5 +77,5 @@ I use `pipenv` to manage dependencies. Install it, create a virtual environment,
 2. Create a Python StreamLit Run/Debug configuration like this:
    ![streamlit-run-debug-config.png](images/streamlit-run-debug-config.png)
 
-3. Create a Python Flask Run/Debug configuration like this:
+3. Create a Python Flask Run/Debug configuration (in dish-adviser only) like this:
     ![flask-run-debug-config.png](images/flask-run-debug-config.png)
