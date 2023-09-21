@@ -1,0 +1,182 @@
+Restaurant: OLIO E PIÙ (ID: 1)
+Description: OLIO E PIÙ is a trattoria located in Greenwich Village, New York City. Specializing in authentic Italian cuisine, the restaurant features classic dishes with an emphasis on house-made pastas, hand-stretched pizza, and traditional favorites like Caprese salad, fritto misto, and tiramisu. The atmosphere is warm and welcoming, showcasing a rustic interior, wood-fired oven, and a well-curated wine and cocktail list. Regular menu updates ensure seasonally fresh offerings, but customer favorites such as carbonara and tagliatelle Bolognese are always available.
+
+Location:
+Street: 3 Greenwich Avenue
+City: New York
+State: NY
+Postal Code: 10014
+Country: US
+Latitude: 40.0209
+Longitude: -74.29342
+Visuals:
+
+Logo: http://localhost:8081/olio_e_piu/primary.jpg
+Photo: http://localhost:8081/olio_e_piu/logo.png
+
+Menus:
+
+1. LUNCH (ID: 1)
+Description: Dine in style with our lunch menu. Experience delicious Italian classics such as handmade pastas, thin-crust pizzas, refreshing salads, and daily specials. End on a sweet note with our variety of decadent desserts.
+
+INSALATE - Fresh Salad:
+1. OLIO CAESAR: Romaine lettuce, crouton, parmesan - Italian & Pescetarian (Egg intolerance) - $19, 66 cal.
+2. BUFFALO MOZZARELLA: Buffalo mozzarella, figs, endives, watercress, saba dressing - $23, 95 cal.
+3. EMILIANA: Arugula, prosciutto di Parma, parmesan, red wine vinaigrette - $19, 66 cal.
+
+PRIMI PIATTI - Fresh Handmade Pastas:
+1. PACCHERI NERE: Squid ink paccheri, sepia, mussels, crabmeat, tomato, white wine, peperoncino, pancito - $44, 45 cal.
+2. CAPPELLACCI CON ASTICE: Ravioli with ricotta, lobster, crabmeat, beech mushroom, red wine sauce, chive - $36, 45 cal.
+3. RIGATONI: Pork butt ragu, Parmesan, black peppercorns - $29, 45 cal.
+4. SPAGHETTI CHITARRA ALLA CARBONARA: Prosciutto, black pepper, egg, parmesan, chili oil - $28, 45 cal.
+5. FETTUCCINE TARTUFO: Black truffles, butter, parmesan - $58, 45 cal.
+
+SECONDI - Fresh Secondi:
+1. POLLO ARROSTO: Organic chicken, spinach, cipollini onions, oyster mushroom, preserved lemon, sugo rosso - $39, 45 cal.
+2. BRANZINO: Grilled sea bass, braised fennel, virgin sauce - $38, 45 cal.
+3. TAGLIATA DI MANZO: 14 oz New York strip steak, crispy potatoes, parmesan, red wine sauce - $50, 45 cal.
+
+ANTIPASTI - Fresh Antipasti:
+1. BRUSCHETTA RICOTTA: Whipped ricotta, white truffle oil, sea salt - $16, 45 cal.
+2. FRITTO MISTO: Squid, shrimp, white fish, zucchini, Bombay aioli - $29, 45 cal.
+3. TARTARE DI SALMONE: Raw Atlantic salmon, shallots, mustard, avocado, beets, cornichons, passion fruit vinaigrette, basil oil, micro greens - $25, 45 cal.
+4. POLIPO ALLA GRIGLIA: Grilled octopus, cannellini purée, potatoes, pickled onions, olives, capers, parsley - $29, 45 cal.
+5. TORTELLINI EN BRODO: Veal ravioli, nutmeg, crispy artichoke, parmesan broth - $17, 45 cal.
+#
+Restaurant: LA BOULANGERIE ARTISAN (ID: 2)
+Description: Located in the heart of SoHo, New York City, LA BOULANGERIE ARTISAN offers guests a delightful French bakery and café experience. The establishment is known for its fresh croissants, pastries, and breads baked daily, as well as traditional dishes like quiche Lorraine, croque monsieur, and ratatouille. The café has a cozy ambiance with Parisian charm, and patrons can also enjoy a selection of French wines and coffees.
+
+Location:
+Street: 15 SoHo Square
+City: New York
+State: NY
+Postal Code: 10012
+Country: US
+Latitude: 40.7223
+Longitude: -73.9990
+Visuals:
+Logo: http://localhost:8081/la_boulangerie/primary.jpg
+Photo: http://localhost:8081/la_boulangerie/logo.png
+
+Menus:
+
+BREAKFAST (ID: 2)
+Description: Begin your day with traditional French breakfast offerings, from pastries to hearty dishes.
+CROISSANT: Classic buttery croissant - $5, 300 cal.
+PAIN AU CHOCOLAT: Chocolate-filled pastry - $6, 320 cal.
+QUICHE LORRAINE: Bacon, cheese, and egg in a pastry crust - $12, 450 cal.
+#
+Restaurant: EL MERCADO TAQUERIA (ID: 3)
+Description: Nestled in the East Village, EL MERCADO TAQUERIA provides an authentic Mexican dining experience in New York City. From tacos and quesadillas to ceviche and guacamole, the flavors are bold and fresh. With colorful décor and lively music, it's a vibrant spot to enjoy margaritas and traditional Mexican cuisine.
+
+Location:
+Street: 120 East 7th Street
+City: New York
+State: NY
+Postal Code: 10009
+Country: US
+Latitude: 40.7262
+Longitude: -73.9837
+Visuals:
+Logo: http://localhost:8081/el_mercado/primary.jpg
+Photo: http://localhost:8081/el_mercado/logo.png
+
+Menus:
+
+DINNER (ID: 3)
+Description: Dive into a variety of traditional Mexican dishes, each bursting with flavor.
+TACOS AL PASTOR: Marinated pork, pineapple, cilantro, and onions - $12 for 3, 540 cal.
+GUACAMOLE: Freshly mashed avocados with tomatoes, onions, and cilantro - $9, 220 cal.
+CEVICHE: Fresh fish, lime juice, jalapenos, tomatoes, and cilantro - $15, 180 cal.
+#
+Restaurant: NIKKO SUSHI BAR (ID: 4)
+Description: Located in Midtown Manhattan, NIKKO SUSHI BAR offers a contemporary sushi dining experience. Known for its fresh fish and creative rolls, it's a hotspot for sushi enthusiasts. The interior is sleek and modern, with a touch of traditional Japanese design elements.
+
+Location:
+Street: 45 W 45th Street
+City: New York
+State: NY
+Postal Code: 10036
+Country: US
+Latitude: 40.7558
+Longitude: -73.9813
+Visuals:
+Logo: http://localhost:8081/nikko/primary.jpg
+Photo: http://localhost:8081/nikko/logo.png
+
+Menus:
+
+DINNER (ID: 4)
+Description: Enjoy a selection of sushi rolls, sashimi, and other traditional Japanese dishes.
+DRAGON ROLL: Eel, cucumber, avocado, and tobiko - $18, 450 cal.
+NIGIRI PLATTER: Assortment of fresh fish on vinegared rice - $25, 500 cal.
+TEMPURA UDON: Noodle soup with tempura shrimp and vegetables - $16, 600 cal.
+#
+Restaurant: ATHENIAN TAVERNA (ID: 5)
+Description: Located in the Upper East Side, ATHENIAN TAVERNA offers diners an authentic Greek culinary journey. With dishes ranging from moussaka to souvlaki, and tzatziki to baklava, the flavors transport you straight to a Mediterranean seaside. The setting is adorned with blue and white, reminiscent of the Greek islands, complemented by traditional Greek music.
+
+Location:
+Street: 180 E 80th Street
+City: New York
+State: NY
+Postal Code: 10075
+Country: US
+Latitude: 40.7742
+Longitude: -73.9560
+Visuals:
+Logo: http://localhost:8081/athenian/primary.jpg
+Photo: http://localhost:8081/athenian/logo.png
+
+Menus:
+
+DINNER (ID: 5)
+Description: A blend of classic and modern Greek dishes.
+MOUSSAKA: Layers of eggplant, potato, and spiced beef, topped with béchamel - $20, 550 cal.
+TZATZIKI: Yogurt dip with cucumber, garlic, and dill - $7, 150 cal.
+BAKLAVA: Sweet pastry with layers of filo, nuts, and honey - $8, 300 cal.
+#
+Restaurant: BOMBAY SPICE HOUSE (ID: 6)
+Description: Situated in the vibrant neighborhood of Tribeca, BOMBAY SPICE HOUSE offers an exquisite Indian dining experience. From fragrant curries to tandoori specials, every dish is a melody of spices. The ambiance is a blend of modern and traditional, with Indian art adorning the walls.
+
+Location:
+Street: 75 Leonard Street
+City: New York
+State: NY
+Postal Code: 10013
+Country: US
+Latitude: 40.7184
+Longitude: -74.0072
+Visuals:
+Logo: http://localhost:8081/bombay/primary.jpg
+Photo: http://localhost:8081/bombay/logo.png
+
+Menus:
+
+DINNER (ID: 6)
+Description: A myriad of flavors from various regions of India.
+CHICKEN TIKKA MASALA: Chicken in a creamy tomato and spice sauce - $18, 470 cal.
+LAMB BIRYANI: Aromatic rice dish with spiced lamb and saffron - $20, 520 cal.
+SAMOSAS: Fried pastry filled with spiced potatoes and peas - $8, 290 cal.
+#
+Restaurant: LA CASITA CUBANA (ID: 7)
+Description: Tucked away in Chelsea, LA CASITA CUBANA is a gem offering Cuban delicacies. With dishes like ropa vieja, empanadas, and sweet plantains, diners are in for a treat. The vibrant, colorful setting is accompanied by Cuban tunes, creating a lively atmosphere.
+
+Location:
+Street: 211 W 23rd Street
+City: New York
+State: NY
+Postal Code: 10011
+Country: US
+Latitude: 40.7449
+Longitude: -73.9980
+Visuals:
+Logo: http://localhost:8081/casita/primary.jpg
+Photo: http://localhost:8081/casita/logo.png
+
+Menus:
+
+DINNER (ID: 7)
+Description: A selection of traditional Cuban dishes.
+ROPA VIEJA: Shredded beef stew in a tomato-based sauce - $19, 460 cal.
+EMPANADAS: Fried pastry pockets filled with meat or cheese - $10 for 3, 350 cal.
+SWEET PLANTAINS: Caramelized plantains - $6, 250 cal.

@@ -1,0 +1,90 @@
+Restaurant: TACO TEMPLE [ID: 7k8l02m3-345n-67o4-5p6q-5r78901234ab]
+
+Description:
+TACO TEMPLE reigns as Tampa's premier destination for taco enthusiasts. With an extensive array of both traditional and innovative taco offerings, the establishment promises a bite for every palate. The vibrant decor, inspired by Mexican street art, along with the ambient Latin music, ensures an upbeat and festive atmosphere, perfect for casual gatherings.
+
+Location:
+Street: 89 Fiesta Lane
+City: Tampa
+State: FL
+Postal Code: 33606
+Country: US
+Latitude: 27.9475
+Longitude: -82.4584
+
+Visuals:
+Logo: http://localhost:8081/taco_temple/primary.jpg
+Photo: http://localhost:8081/taco_temple/logo.png
+
+LUNCH MENU:
+
+TACO SELECTIONS:
+- CARNE ASADA [ID: 701]: Grilled steak, onions, cilantro, salsa verde - $4, 200 cal.
+- AL PASTOR [ID: 702]: Marinated pork, pineapple, onions, cilantro - $3.50, 190 cal.
+- VEGGIE DELIGHT [ID: 703]: Grilled veggies, avocado salsa, queso fresco - $3, 180 cal.
+
+DINNER MENU:
+
+SIGNATURE TACOS:
+- TACO DE CAMARON [ID: 704]: Grilled shrimp, mango salsa, chipotle aioli - $5, 220 cal.
+- TACO TEMPLE SPECIAL [ID: 705]: Slow-cooked barbacoa, guacamole, radishes, cotija cheese - $4.50, 210 cal.
+#
+Restaurant: CANTINA CIELO [ID: 8s9t03u4-456v-78w5-6x7y-6z89012345bc]
+
+Description:
+CANTINA CIELO offers a panoramic view of Tampa's skyline while serving an array of classic Mexican dishes. The rooftop setting, paired with a sophisticated interior, positions CANTINA CIELO as the ideal spot for evening soirees. Apart from their comprehensive taco menu, the restaurant boasts an extensive tequila and mezcal collection.
+
+Location:
+Street: 47 Skyline Drive
+City: Tampa
+State: FL
+Postal Code: 33609
+Country: US
+Latitude: 27.9523
+Longitude: -82.4560
+
+Visuals:
+Logo: http://localhost:8081/cantina_cielo/primary.jpg
+Photo: http://localhost:8081/cantina_cielo/logo.png
+
+LUNCH MENU:
+
+MEXICAN CLASSICS:
+- QUESADILLA [ID: 801]: Grilled chicken, cheese, peppers, with a side of salsa - $8, 280 cal.
+- TOSTADA [ID: 802]: Crunchy flat tortilla, beans, lettuce, tomatoes, sour cream - $7, 250 cal.
+
+DINNER MENU:
+
+HOUSE SPECIALTIES:
+- CHILES RELLENOS [ID: 803]: Poblano peppers stuffed with cheese, covered in tomato sauce - $14, 310 cal.
+- ENCHILADAS VERDES [ID: 804]: Chicken enchiladas, green sauce, cheese, cream, onions - $13, 295 cal.
+#
+Restaurant: MOLE MADNESS [ID: 9a0b04c5-567d-89e6-7f8g-7h90123456cd]
+
+Description:
+MOLE MADNESS celebrates the rich depth and variety of Mexican mole sauces. The interior, reminiscent of an old hacienda, accentuates the culinary heritage of Mexico. With mole varieties ranging from sweet and smoky to spicy and savory, MOLE MADNESS guarantees an unforgettable gastronomic journey.
+
+Location:
+Street: 123 Puebla Plaza
+City: Tampa
+State: FL
+Postal Code: 33612
+Country: US
+Latitude: 27.9550
+Longitude: -82.4550
+
+Visuals:
+Logo: http://localhost:8081/mole_madness/primary.jpg
+Photo: http://localhost:8081/mole_madness/logo.png
+
+LUNCH MENU:
+
+MOLE BOWLS:
+- MOLE POBLANO [ID: 901]: Grilled chicken, poblano mole sauce, sesame seeds, served with rice - $12, 320 cal.
+- MOLE AMARILLO [ID: 902]: Pork, yellow mole sauce, green beans, potatoes - $13, 340 cal.
+
+DINNER MENU:
+
+HOUSE SPECIALS:
+- ENMOLADAS [ID: 903]: Tortillas bathed in mole sauce, filled with cheese or chicken - $14, 330 cal.
+- MOLE MADNESS PLATTER [ID: 904]: A sampling of various mole dishes, showcasing the vast range of flavors - $20, 500 cal.

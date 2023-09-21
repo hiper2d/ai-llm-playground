@@ -1,0 +1,42 @@
+[
+  {
+    "id": "2d3b65f8-569e-43d7-9a8e-0b23456789ab",
+    "name": "SUSHI HAVEN",
+    "tags": ["sushi", "japanese", "asian"],
+    "rating": 4.2,
+    "address": "145 Bayshore Boulevard, Tampa, FL, 33606",
+    "location": { "type": "Point", "coordinates": [27.94294901445147, -82.45982104476855] },
+  },
+  {
+    "id": "3f4c76g9-675f-54h8-9j1k-1c34567890bc",
+    "name": "NAMI WAVE",
+    "tags": ["sushi", "japanese", "asian"],
+    "rating": 4.2,
+    "address": "212 Ocean Drive, Tampa, FL, 33607",
+    "location": { "type": "Point", "coordinates": [27.965998643480937, -82.52027104619046] }
+  },
+  {
+    "id": "4k5l87m0-789n-65o1-2p3q-2r45678901st",
+    "name": "SAKURA DELIGHT",
+    "tags": ["sushi", "japanese", "asian"],
+    "rating": 4.2,
+    "address": "99 Cherry Blossom Lane, Tampa, FL, 33608",
+    "location": { "type": "Point", "coordinates": [27.870833791753167, -82.51000003667079] }
+  },
+  {
+    "id": "5v6w98x1-012y-78z2-3a4b-3c56789012tu",
+    "name": "TIDES OF TSUKI",
+    "tags": ["sushi", "japanese", "asian"],
+    "rating": 4.2,
+    "address": "1601 Weedon Island Dr, St. Petersburg, FL 33702",
+    "location": { "type": "Point", "coordinates": [27.860120708547292, -82.60517852515494] }
+  },
+  {
+    "id": "6d7e01f2-234g-56h3-4i5j-4k67890123vw",
+    "name": "SAKURA BREEZE",
+    "tags": ["sushi", "japanese", "asian"],
+    "rating": 4.2,
+    "address": "449 Central Ave Suite 104, St. Petersburg, FL 33701",
+    "location": { "type": "Point", "coordinates": [27.773107853218345, -82.63893243199183] }
+  }
+]
