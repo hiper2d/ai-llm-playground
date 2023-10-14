@@ -5,7 +5,7 @@ from typing import List, Union
 from langchain.agents import initialize_agent, AgentType
 from langchain.agents.conversational_chat.output_parser import ConvoOutputParser
 from langchain.chat_models import ChatOpenAI
-from langchain.memory import ConversationBufferMemory
+from langchain.memory import ConversationBufferMemory, RedisChatMessageHistory
 from langchain.output_parsers.json import parse_json_markdown
 from langchain.schema import AgentAction, AgentFinish, OutputParserException
 from langchain.tools import Tool
@@ -63,7 +63,8 @@ class ConversationalAgentFactory:
     def __init__(self, tools: List[Tool], llm: ChatOpenAI):
         self.tools = tools
         self.llm = llm
-        self.memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+        history = RedisChatMessageHistory(session_id="123", key_prefix='DISHER_ADVISER:')
+        self.memory = ConversationBufferMemory(memory_key="chat_history", llm=llm, max_token_limit=1000, chat_memory=history, return_messages=True)
 
     def get_agent(self):
         agent_executor = initialize_agent(

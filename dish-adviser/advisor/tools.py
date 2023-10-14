@@ -3,14 +3,11 @@ from urllib.parse import quote_plus
 
 from dotenv import load_dotenv
 from langchain.embeddings import OpenAIEmbeddings
-from langchain.schema import Document
 from langchain.tools import Tool
 from langchain.vectorstores import MongoDBAtlasVectorSearch
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
-
-from advisor.prompts import MONGODB_TOOL_PROMPTY
 
 
 class SingleTextArg(BaseModel):
@@ -55,7 +52,6 @@ class MongoDbSearchTool:
                     "location": 0
                 }
             }]
-
         )
         # print(list(map(lambda x: search_result[0].metadata['_id'], search_result)))
         ans = []

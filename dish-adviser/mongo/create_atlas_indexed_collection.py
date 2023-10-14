@@ -25,21 +25,21 @@ def main():
     embeddings = OpenAIEmbeddings()
 
     # The Vector Index has to be created manually in the Atlas Cluster:
-    # {
-    #     "mappings": {
-    #         "dynamic": false,
-    #         "fields": {
-    #             "embedding": {
-    #                 "dimensions": 1536,
-    #                 "similarity": "cosine",
-    #                 "type": "knnVector"
-    #             },
-    #             "location": {
-    #                 "type": "geo"
-    #             }
-    #         }
-    #     }
-    # }
+    {
+        "mappings": {
+            "dynamic": false,
+            "fields": {
+                "embedding": {
+                    "dimensions": 1536,
+                    "similarity": "cosine",
+                    "type": "knnVector"
+                },
+                "location": {
+                    "type": "geo"
+                }
+            }
+        }
+    }
 
     # Indexed search example:
     # {
