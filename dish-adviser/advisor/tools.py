@@ -29,39 +29,86 @@ class MongoDbSearchTool:
         embeddings = OpenAIEmbeddings()
 
         self.vectorstore = MongoDBAtlasVectorSearch(restaurants_collection, embeddings, index_name="vector_geo_index")
+        self.db = db
+        self.restaurants_collection = restaurants_collection
+        self.embeddings = embeddings
 
     def search(self, query: str):
-        search_result = self.vectorstore.similarity_search_with_score(
-            query=query,
-            k=2,
-            pre_filter={
-                "geoWithin": {
-                    "circle": {
-                        "center": {
-                            "type": "Point",
-                            "coordinates": [-82.3355502759486, 28.17619853788267]
-                        },
-                        "radius": 10000
-                    },
-                    "path": "location"
+        # The code below suddenly stopped working with the following error: "$vectorSearch is not allowed"
+        # The issue discussion thread: https://www.mongodb.com/community/forums/t/vectorsearch-is-not-allowed/248934
+        #
+        # search_result = self.vectorstore.similarity_search_with_score(
+        #     query=query,
+        #     k=2,
+        #     pre_filter={
+        #         "geoWithin": {
+        #             "circle": {
+        #                 "center": {
+        #                     "type": "Point",
+        #                     "coordinates": [-82.3355502759486, 28.17619853788267]
+        #                 },
+        #                 "radius": 10000
+        #             },
+        #             "path": "location"
+        #         }
+        #     },
+        #     post_filter_pipeline=[{
+        #         "$project": {
+        #             "embedding": 0,
+        #             "location": 0
+        #         }
+        #     }]
+        # )
+
+        # I decided not to use `MongoDBAtlasVectorSearch` and `$vectorSearch`
+        # Instead, I created a MongoDB native query that uses `$search` with the `knnBeta` operator
+        # The `knnBeta` operator is deprecated in favor of `$vectorSearch` but it still works
+        mongo_query = [
+            {
+                "$search": {
+                    "index": "vector_geo_index",
+                    "knnBeta": {
+                        "vector": self.embeddings.embed_query(query),
+                        "path": "embedding",
+                        "k": 2,
+                        "filter": {
+                            "geoWithin": {
+                                "circle": {
+                                    "center": {
+                                        "type": "Point",
+                                        "coordinates": [-82.35661756427363, 28.169407931483935]  # todo: get user location
+                                    },
+                                    "radius": 1600  # todo: make it configurable
+                                },
+                                "path": "location"
+                            }
+                        }
+                    }
                 }
             },
-            post_filter_pipeline=[{
+            {
                 "$project": {
-                    "embedding": 0,
-                    "location": 0
+                    "text": 1
                 }
-            }]
-        )
+            }
+        ]
+        # search_result = self.db.command('aggregate', 'vector_geo_index', pipeline=query, cursor={})
+        search_result = self.restaurants_collection.aggregate(mongo_query)
+
         # print(list(map(lambda x: search_result[0].metadata['_id'], search_result)))
         ans = []
-        for res in search_result:
-            doc, score = res
-            page_content = doc.page_content
-            meta = doc.metadata
+        # for res in search_result:
+        #     doc, score = res
+        #     page_content = doc.page_content
+        #     meta = doc.metadata
+        #     ans.append({
+        #         "restaurant_id": meta['id'],
+        #         "description": page_content,
+        #     })
+        for doc in search_result:
             ans.append({
-                "restaurant_id": meta['id'],
-                "description": page_content,
+                "restaurant_id": doc['id'],
+                "description": doc['text'],
             })
         return ans
 

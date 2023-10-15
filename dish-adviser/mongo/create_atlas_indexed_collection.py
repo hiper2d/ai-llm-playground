@@ -7,7 +7,7 @@ from langchain.vectorstores import MongoDBAtlasVectorSearch
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
-from mongo.menu_db import get_asian_documents, get_mexican_documents
+from menu_db import get_asian_documents, get_mexican_documents
 
 
 def main():
@@ -24,40 +24,6 @@ def main():
     restaurants_collection = db["restaurants"]
     embeddings = OpenAIEmbeddings()
 
-    # The Vector Index has to be created manually in the Atlas Cluster:
-    {
-        "mappings": {
-            "dynamic": false,
-            "fields": {
-                "embedding": {
-                    "dimensions": 1536,
-                    "similarity": "cosine",
-                    "type": "knnVector"
-                },
-                "location": {
-                    "type": "geo"
-                }
-            }
-        }
-    }
-
-    # Indexed search example:
-    # {
-    #     $search: {
-    #         index: "vector_geo_index",
-    #         geoWithin: {
-    #             circle: {
-    #                 center: {
-    #                     type: "Point",
-    #                     coordinates: [-82.3355502759486, 28.17619853788267]
-    #                 },
-    #                 radius: 10000
-    #             },
-    #             path: "location"
-    #         }
-    #     }
-    # }
-
     index_name = "vector_geo_index"
     if "restaurants" in db.list_collection_names():
         vectorstore = MongoDBAtlasVectorSearch(restaurants_collection, embeddings, index_name=index_name)
@@ -68,7 +34,7 @@ def main():
             docs, embeddings, collection=restaurants_collection, index_name=index_name
         )
 
-    # search example
+    # Test similarity search
     search_result = vectorstore.similarity_search(query='sushi', k=5)
     print(list(map(lambda x: search_result[0].metadata['_id'], search_result)))
 

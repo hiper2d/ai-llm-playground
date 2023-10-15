@@ -5,17 +5,32 @@ Experiments with Langchain, OpenAI API, Embedding, and Agents
 
 ### Restaurant Advisor
 
-This chatbot is aware of restaurant database in MongoDB and is capable of finding the best one nearby. It combines vector semantic search with geo-location MongoDb Atlas Index search. It is quite awesome:
-I will add more details of how to setup it and how to configure a free MongoDb Cloud database cluster with search indexes.
+This chatbot is aware of restaurant database in MongoDB and is capable of finding the best one nearby. It combines vector semantic search with geo-location MongoDb Atlas Index search. It keeps the chatbot conversation history in Redis. It is quite awesome, the most advanced AI project I did so far.
 
-It supports StreamLit and Flask servers.
+I chose MongoDb as a vector store because of multiple reasons:
+- I can to keep documents in a cloud, not only vectors
+- My documents are not just text chunks but complex JSON object with a schema
+- Each document has `embedding` and `location` fields that are indexed and can be used for fast semantic and geo-location search
+- I use geo-location search as a filter for the following vector search. I.e. I limit the search to the restaurants nearby and then I use vector search to find the best one.
+- I can use MongoDB native queries if I feel limitations with Langchain API (or in case of bugs which I encountered a few times)
+
+I plan to deploy this to AWS Lambda eventually (I hope soon), thus I need to keep conversation history somewhere. I chose Redis. It is supported by Langchain.
+The application supports StreamLit and Flask servers.
+
+To start it locally run a Redis container using the `docker-compose.yml`:
+```bash
+docker-compose up
+```
+Then start the Python application as usual (see below).
 
 ![restaurant-advisor.png](images/restaurant-advisor.png)
 
 ### AI Girlfriend
 
-A simple chat using Langchain, Streamlit, and OpenAI API. It uses a prompt to add some personality to the ChatGPT and make use it has some memory of the conversation. And it can voice-talk almost like a real human using Elevenlabs API.  
-I use the [Elevenlabs](https://elevenlabs.io/speech-synthesis) API (which is free) to generate a voice in a browser (StreamLit allows to play it). The [FlowGPT](https://flowgpt.com/) service was helpful to come up with a prompt. The voice is very impressive.
+Okay, this is not actually a girlfriend but more like an interesting person with some technical background. At first, I took some custom prompts for chatbots with AI-girlfriend personality from [FlowGPT](https://flowgpt.com/). But they all were either anime or virtual sex oriented (usually both) which I found rather boring. I came up with my own prompt that focuses on making the chatbot more alive and natural. I prohibited her to mention that she is an AI and gave some background in engineering so she is quite nerdy. I also tried to make her more open-minded that a regular Chat GPT, therefore she has some temper and can even insult you (she called me stupid once). She can talk using AI-generated voice which is very impressive. 
+
+In the end, this is a simple chatbot created with Langchain, Streamlit, and OpenAI API. It can voice-talk almost like a real human using Elevenlabs API.  
+I use the [Elevenlabs](https://elevenlabs.io/speech-synthesis) API (which is free) to generate a voice in a browser (StreamLit allows to play it).
 
 ![ai-girlfriend.png](images/ai-girlfriend.png)
 
