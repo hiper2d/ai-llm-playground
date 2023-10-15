@@ -59,6 +59,15 @@ class MongoDbSearchTool:
         #         }
         #     }]
         # )
+        # search_result = self.db.command('aggregate', 'vector_geo_index', pipeline=query, cursor={})
+        # for res in search_result:
+        #     doc, score = res
+        #     page_content = doc.page_content
+        #     meta = doc.metadata
+        #     ans.append({
+        #         "restaurant_id": meta['id'],
+        #         "description": page_content,
+        #     })
 
         # I decided not to use `MongoDBAtlasVectorSearch` and `$vectorSearch`
         # Instead, I created a MongoDB native query that uses `$search` with the `knnBeta` operator
@@ -92,27 +101,16 @@ class MongoDbSearchTool:
                 }
             }
         ]
-        # search_result = self.db.command('aggregate', 'vector_geo_index', pipeline=query, cursor={})
         search_result = self.restaurants_collection.aggregate(mongo_query)
-
-        # print(list(map(lambda x: search_result[0].metadata['_id'], search_result)))
         ans = []
-        # for res in search_result:
-        #     doc, score = res
-        #     page_content = doc.page_content
-        #     meta = doc.metadata
-        #     ans.append({
-        #         "restaurant_id": meta['id'],
-        #         "description": page_content,
-        #     })
         for doc in search_result:
             ans.append({
-                "restaurant_id": doc['id'],
+                "restaurant_id": str(doc['_id']),
                 "description": doc['text'],
             })
         return ans
 
-    def as_tool(self):
+    def as_langchain_tool(self) -> Tool:
         return Tool(
             name="RestaurantSearch",
             func=self.search,

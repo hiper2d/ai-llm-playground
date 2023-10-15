@@ -1,18 +1,17 @@
 import json
 import os
+import re
 from typing import List, Union
 
+from prompts import FUNCTION_AGENT_PROMPT_PREFIX, FUNCTION_AGENT_PROMPT_SUFFIX, \
+    FUNCTION_AGENT_FORMAT_INSTRUCTIONS
+from tools import MongoDbSearchTool
 from langchain.agents import initialize_agent, AgentType
 from langchain.agents.conversational_chat.output_parser import ConvoOutputParser
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory, RedisChatMessageHistory
-from langchain.output_parsers.json import parse_json_markdown
 from langchain.schema import AgentAction, AgentFinish, OutputParserException
 from langchain.tools import Tool
-
-from advisor.prompts import FUNCTION_AGENT_PROMPT_PREFIX, FUNCTION_AGENT_PROMPT_SUFFIX, \
-    FUNCTION_AGENT_FORMAT_INSTRUCTIONS
-from advisor.tools import MongoDbSearchTool
 
 
 class ConvoOutputCustomParser(ConvoOutputParser):
@@ -29,12 +28,17 @@ class ConvoOutputCustomParser(ConvoOutputParser):
              OutputParserException if parsing fails.
         """
         try:
-            # Attempt to parse the text into a structured format (assumed to be JSON
-            # stored as markdown)
-            try:
-                response = json.loads(text)
-            except Exception:
-                response = parse_json_markdown(text)
+            # This is a hacky hack. For some reason the default ConvoOutputParser fails to parse a markdown Json
+            # I had to implement my own parse_json_markdown method
+            replaced_text = text.replace('\n', '').replace('\\n', '').replace('\\', '')
+            match = re.search(r"```(json)?(.*)```", replaced_text, re.DOTALL)
+
+            if match is None:
+                json_str = replaced_text
+            else:
+                json_str = match.group(2)
+            json_str = json_str.strip()
+            response = json.loads(json_str)
 
             # If the response contains an 'action' and 'action_input'
             if "action" in response and "action_input" in response:
@@ -43,7 +47,7 @@ class ConvoOutputCustomParser(ConvoOutputParser):
                 # If the action indicates a final answer, return an AgentFinish
                 if action == "Final Answer":
                     restaurant_ids = response["restaurant_ids"]
-                    ids = "\n\nRestaurant Ids: " + ",".join(restaurant_ids) if len(restaurant_ids) > 0 else ""
+                    ids = "##: " + ",".join(restaurant_ids) if len(restaurant_ids) > 0 else ""
                     return AgentFinish({"output": action_input + ids}, text)
                 else:
                     # Otherwise, return an AgentAction with the specified action and
@@ -56,6 +60,7 @@ class ConvoOutputCustomParser(ConvoOutputParser):
                     f"Missing 'action' or 'action_input' in LLM output: {text}"
                 )
         except Exception:
+            print("Could not parse LLM Markdown/JSON output: " + text)
             return AgentFinish({"output": text}, text)
 
 
@@ -76,7 +81,7 @@ class ConversationalAgentFactory:
             agent_kwargs={
                 "system_message": FUNCTION_AGENT_PROMPT_PREFIX,
                 "human_message": FUNCTION_AGENT_PROMPT_SUFFIX,
-                "output_parser": ConvoOutputCustomParser(), # enable this if work with gpt-3.5
+                "output_parser": ConvoOutputCustomParser(),
             }
         )
         return agent_executor
@@ -93,6 +98,6 @@ def load_openai_key():
 def init_convo_agent():
     load_openai_key()
     llm = ChatOpenAI(temperature=0, model_name="gpt-4")
-    mongo_tool = MongoDbSearchTool().as_tool()
+    mongo_tool = MongoDbSearchTool().as_langchain_tool()
     tools = [mongo_tool]
     return ConversationalAgentFactory(llm=llm, tools=tools).get_agent()
