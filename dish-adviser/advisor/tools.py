@@ -87,7 +87,7 @@ class MongoDbSearchTool:
                                         "type": "Point",
                                         "coordinates": [-82.35661756427363, 28.169407931483935]  # todo: get user location
                                     },
-                                    "radius": 1600  # todo: make it configurable
+                                    "radius": 160000  # todo: make it configurable
                                 },
                                 "path": "location"
                             }

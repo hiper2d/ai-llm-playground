@@ -3,15 +3,14 @@ import os
 import re
 from typing import List, Union
 
-from prompts import FUNCTION_AGENT_PROMPT_PREFIX, FUNCTION_AGENT_PROMPT_SUFFIX, \
-    FUNCTION_AGENT_FORMAT_INSTRUCTIONS
-from tools import MongoDbSearchTool
+from advisor.tools import MongoDbSearchTool
 from langchain.agents import initialize_agent, AgentType
 from langchain.agents.conversational_chat.output_parser import ConvoOutputParser
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory, RedisChatMessageHistory
 from langchain.schema import AgentAction, AgentFinish, OutputParserException
 from langchain.tools import Tool
+from advisor.prompts import FUNCTION_AGENT_FORMAT_INSTRUCTIONS, FUNCTION_AGENT_PROMPT_PREFIX, FUNCTION_AGENT_PROMPT_SUFFIX
 
 
 class ConvoOutputCustomParser(ConvoOutputParser):
