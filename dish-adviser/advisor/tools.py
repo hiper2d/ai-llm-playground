@@ -15,11 +15,14 @@ class SingleTextArg(BaseModel):
 
 
 class MongoDbSearchTool:
-    def __init__(self):
+    def __init__(self, user_location=(-82.3355502759486, 28.17619853788267), search_radius=160000):
         username = quote_plus(os.getenv("MONGO_GMATE_USERNAME"))
         password = quote_plus(os.getenv("MONGO_GMATE_PASSWORD"))
         cluster = os.getenv("MONGO_GMATE_CLUSTER")
         database_name = os.getenv("MONGO_GMATE_DATABASE")
+
+        self.user_location = user_location
+        self.search_radius = search_radius
 
         uri = f"mongodb+srv://{username}:{password}@{cluster}.q1ds6re.mongodb.net/?retryWrites=true&w=majority"
         client = MongoClient(uri, server_api=ServerApi('1'))
@@ -85,9 +88,9 @@ class MongoDbSearchTool:
                                 "circle": {
                                     "center": {
                                         "type": "Point",
-                                        "coordinates": [-82.35661756427363, 28.169407931483935]  # todo: get user location
+                                        "coordinates": self.user_location
                                     },
-                                    "radius": 160000  # todo: make it configurable
+                                    "radius": self.search_radius
                                 },
                                 "path": "location"
                             }

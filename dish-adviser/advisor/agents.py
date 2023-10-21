@@ -3,6 +3,8 @@ import os
 import re
 from typing import List, Union
 
+import redis
+
 from advisor.tools import MongoDbSearchTool
 from langchain.agents import initialize_agent, AgentType
 from langchain.agents.conversational_chat.output_parser import ConvoOutputParser
@@ -64,11 +66,22 @@ class ConvoOutputCustomParser(ConvoOutputParser):
 
 
 class ConversationalAgentFactory:
-    def __init__(self, tools: List[Tool], llm: ChatOpenAI):
+    def __init__(self, tools: List[Tool], llm: ChatOpenAI, session_id: str):
         self.tools = tools
         self.llm = llm
-        history = RedisChatMessageHistory(session_id="123", key_prefix='DISHER_ADVISER:')
-        self.memory = ConversationBufferMemory(memory_key="chat_history", llm=llm, max_token_limit=1000, chat_memory=history, return_messages=True)
+
+        redis_url = os.getenv("REDIS_GMATE_URL")
+        history = RedisChatMessageHistory(
+            session_id=session_id,
+            url=redis_url,
+            key_prefix='DISHER_ADVISER:'
+        )
+        self.memory = ConversationBufferMemory(
+            memory_key="chat_history",
+            llm=llm, max_token_limit=1000,
+            chat_memory=history,
+            return_messages=True
+        )
 
     def get_agent(self):
         agent_executor = initialize_agent(
@@ -94,9 +107,9 @@ def load_openai_key():
         print("OPENAI_API_KEY is set")
 
 
-def init_convo_agent():
+def init_convo_agent(session_id):
     load_openai_key()
     llm = ChatOpenAI(temperature=0, model_name="gpt-4")
     mongo_tool = MongoDbSearchTool().as_langchain_tool()
     tools = [mongo_tool]
-    return ConversationalAgentFactory(llm=llm, tools=tools).get_agent()
+    return ConversationalAgentFactory(llm=llm, tools=tools, session_id=session_id).get_agent()

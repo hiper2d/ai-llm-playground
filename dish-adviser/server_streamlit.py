@@ -1,4 +1,5 @@
 import os
+import uuid
 
 import langchain
 import requests
@@ -34,7 +35,8 @@ def init():
 
 def setup_agent():
     if 'agent' not in st.session_state:
-        st.session_state.agent = init_convo_agent()
+        random_session_id = str(uuid.uuid4())
+        st.session_state.agent = init_convo_agent(random_session_id)
 
 
 def get_response_from_ai(human_input):
