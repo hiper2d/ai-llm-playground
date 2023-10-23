@@ -1,0 +1,18 @@
+{
+  "mappings": {
+    "dynamic": false,
+    "fields": {
+      "embedding": {
+        "dimensions": 1536,
+        "similarity": "cosine",
+        "type": "knnVector"
+      },
+      "location": {
+        "type": "geo"
+      },
+      "text": {
+        "type": "string"
+      }
+    }
+  }
+}

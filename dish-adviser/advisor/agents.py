@@ -70,7 +70,8 @@ class ConversationalAgentFactory:
         self.tools = tools
         self.llm = llm
 
-        redis_url = os.getenv("REDIS_GMATE_URL")
+        # redis_url = os.getenv("REDIS_GMATE_URL")
+        redis_url = 'redis://localhost:6379/0'
         history = RedisChatMessageHistory(
             session_id=session_id,
             url=redis_url,

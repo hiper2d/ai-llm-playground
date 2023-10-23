@@ -283,7 +283,7 @@ def get_asian_documents() -> List[Document]:
                 "id": str(uuid.uuid4()),
                 "location": {
                       "type": "Point",
-                      "coordinates": [-27.94294901445147, 82.45982104476855]
+                      "coordinates": [-82.35658898618775, 28.155384135951152]  # [longitude, latitude]
                 }
             }
         ),
@@ -294,7 +294,7 @@ def get_asian_documents() -> List[Document]:
                 "id": str(uuid.uuid4()),
                 "location": {
                     "type": "Point",
-                    "coordinates": [27.965998643480937, -82.52027104619046]
+                    "coordinates": [-82.3267615726919, 28.189450088627343]  # [longitude, latitude]
                 }
             }
         ),
@@ -305,7 +305,7 @@ def get_asian_documents() -> List[Document]:
                 "id": str(uuid.uuid4()),
                 "location": {
                     "type": "Point",
-                    "coordinates": [27.870833791753167, -82.51000003667079]
+                    "coordinates": [-82.32653074386218, 28.14248959300198]  # [longitude, latitude]
                 }
             }
         ),
@@ -316,7 +316,7 @@ def get_asian_documents() -> List[Document]:
                 "id": str(uuid.uuid4()),
                 "location": {
                     "type": "Point",
-                    "coordinates": [27.860120708547292, -82.60517852515494]
+                    "coordinates": [-82.3422987861816, 28.198898047406693]  # [longitude, latitude]
                 }
             }
         ),
@@ -327,7 +327,7 @@ def get_asian_documents() -> List[Document]:
                 "id": str(uuid.uuid4()),
                 "location": {
                     "type": "Point",
-                    "coordinates": [27.773107853218345, -82.63893243199183]
+                    "coordinates": [-82.35091428618331, 28.187044244284305]  # [longitude, latitude]
                 }
             }
         ),
@@ -343,7 +343,7 @@ def get_mexican_documents() -> List[Document]:
                 "id": str(uuid.uuid4()),
                 "location": {
                     "type": "Point",
-                    "coordinates": [27.94294901445148, -82.45982104476856]
+                    "coordinates": [-82.35526376821747, 28.174933445526445]  # [longitude, latitude]
                 }
             }
         ),
@@ -354,7 +354,7 @@ def get_mexican_documents() -> List[Document]:
                 "id": str(uuid.uuid4()),
                 "location": {
                     "type": "Point",
-                    "coordinates": [27.965998643480938, -82.52027104619047]
+                    "coordinates": [-82.33195054736757, 28.173903340587756]  # [longitude, latitude]
                 }
             }
         ),
@@ -365,7 +365,7 @@ def get_mexican_documents() -> List[Document]:
                 "id": str(uuid.uuid4()),
                 "location": {
                     "type": "Point",
-                    "coordinates": [27.870833791753168, -82.51000003667080]
+                    "coordinates": [-82.34799031649871, 28.145102700392137]  # [longitude, latitude]
                 }
             }
         ),
@@ -376,7 +376,7 @@ def get_mexican_documents() -> List[Document]:
                 "id": str(uuid.uuid4()),
                 "location": {
                     "type": "Point",
-                    "coordinates": [27.860120708547293, -82.60517852515495]
+                    "coordinates": [-82.3795401996739, 28.19073320615236]  # [longitude, latitude]
                 }
             }
         ),
@@ -387,7 +387,7 @@ def get_mexican_documents() -> List[Document]:
                 "id": str(uuid.uuid4()),
                 "location": {
                     "type": "Point",
-                    "coordinates": [27.773107853218346, -82.63893243199184]
+                    "coordinates": [-82.2822284923503, 28.199285719832115]
                 }
             }
         ),

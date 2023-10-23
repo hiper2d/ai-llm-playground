@@ -15,14 +15,21 @@ class SingleTextArg(BaseModel):
 
 
 class MongoDbSearchTool:
-    def __init__(self, user_location=(-82.3355502759486, 28.17619853788267), search_radius=160000):
+    # user_location: (longitude, latitude)
+    # search_radius: in miles
+    #
+    # Location in MongoDb: [longitude, latitude]
+    # Google Maps API location: [latitude, longitude]
+    # It's important to keep in mind the difference between formats.
+    # It's MongoDb format everywhere in the code.
+    def __init__(self, user_lon_lat=(-82.33554135164104, 28.175078895215975), search_radius_miles=5):
         username = quote_plus(os.getenv("MONGO_GMATE_USERNAME"))
         password = quote_plus(os.getenv("MONGO_GMATE_PASSWORD"))
         cluster = os.getenv("MONGO_GMATE_CLUSTER")
         database_name = os.getenv("MONGO_GMATE_DATABASE")
 
-        self.user_location = user_location
-        self.search_radius = search_radius
+        self.user_location = user_lon_lat
+        self.search_radius = search_radius_miles
 
         uri = f"mongodb+srv://{username}:{password}@{cluster}.q1ds6re.mongodb.net/?retryWrites=true&w=majority"
         client = MongoClient(uri, server_api=ServerApi('1'))
@@ -90,7 +97,8 @@ class MongoDbSearchTool:
                                         "type": "Point",
                                         "coordinates": self.user_location
                                     },
-                                    "radius": self.search_radius
+                                    "radius": self.search_radius / 3963.2  # converting to radians
+                                    # Read about radians here: https://www.mongodb.com/docs/manual/core/indexes/index-types/geospatial/2d/calculate-distances/#std-label-calculate-distance-spherical-geometry
                                 },
                                 "path": "location"
                             }
