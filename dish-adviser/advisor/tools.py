@@ -16,7 +16,7 @@ class SingleTextArg(BaseModel):
 
 class MongoDbSearchTool:
     # user_location: (longitude, latitude)
-    # search_radius: in miles
+    # search_radius: in meters
     #
     # Location in MongoDb: [longitude, latitude]
     # Google Maps API location: [latitude, longitude]
@@ -97,8 +97,9 @@ class MongoDbSearchTool:
                                         "type": "Point",
                                         "coordinates": self.user_location
                                     },
-                                    "radius": self.search_radius / 3963.2  # converting to radians
-                                    # Read about radians here: https://www.mongodb.com/docs/manual/core/indexes/index-types/geospatial/2d/calculate-distances/#std-label-calculate-distance-spherical-geometry
+                                    "radius": 16000 # radius in meters: https://www.mongodb.com/docs/atlas/atlas-search/geoWithin/
+                                    # I spend a lot of time trying to understand what units I should use for the radius
+                                    # Read about radian raduis here: https://www.mongodb.com/docs/manual/core/indexes/index-types/geospatial/2d/calculate-distances/#std-label-calculate-distance-spherical-geometry
                                 },
                                 "path": "location"
                             }
