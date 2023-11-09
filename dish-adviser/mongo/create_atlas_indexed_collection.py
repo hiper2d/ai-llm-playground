@@ -51,29 +51,29 @@ def main():
     # search_result = vectorstore.similarity_search(query='sushi', k=5)
     # print(list(map(lambda x: search_result[0].metadata['_id'], search_result)))
 
-    # search_result = vectorstore.similarity_search(
-    #     query='tacos',
-    #     k=5,
-    #     pre_filter={
-    #         "geoWithin": {
-    #             "circle": {
-    #                 "center": {
-    #                     "type": "Point",
-    #                     "coordinates": [-82.3355502759486, 28.17619853788267]
-    #                 },
-    #                 "radius": 5000
-    #             },
-    #             "path": "location"
-    #         }
-    #     },
-    #     post_filter_pipeline=[{
-    #         "$project": {
-    #             "embedding": 0,
-    #             "location": 0
-    #         }
-    #     }]
-    # )
-    # print(list(map(lambda x: search_result[0].metadata['_id'], search_result)))
+    search_result = vectorstore.similarity_search(
+        query='tacos',
+        k=5,
+        pre_filter={
+            "geoWithin": {
+                "circle": {
+                    "center": {
+                        "type": "Point",
+                        "coordinates": [-82.33554135164104, 28.175078895215975]
+                    },
+                    "radius": 16000
+                },
+                "path": "location"
+            }
+        },
+        post_filter_pipeline=[{
+            "$project": {
+                "embedding": 0,
+                "location": 0
+            }
+        }]
+    )
+    print(list(map(lambda x: search_result[0].metadata['_id'], search_result)))
 
 
 if __name__ == '__main__':

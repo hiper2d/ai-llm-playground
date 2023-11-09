@@ -113,6 +113,7 @@ class MongoDbSearchTool:
                 }
             }
         ]
+
         search_result = self.restaurants_collection.aggregate(mongo_query)
         ans = []
         for doc in search_result:
