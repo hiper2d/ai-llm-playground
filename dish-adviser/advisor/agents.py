@@ -110,7 +110,7 @@ def load_openai_key():
 
 def init_convo_agent(session_id):
     load_openai_key()
-    llm = ChatOpenAI(temperature=0, model_name="gpt-4")
+    llm = ChatOpenAI(temperature=0, model_name="gpt-4-1106-preview")
     mongo_tool = MongoDbSearchTool().as_langchain_tool()
     tools = [mongo_tool]
     return ConversationalAgentFactory(llm=llm, tools=tools, session_id=session_id).get_agent()

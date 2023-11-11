@@ -1,5 +1,6 @@
 import os
 import uuid
+from typing import Optional
 
 import langchain
 import requests
@@ -11,6 +12,7 @@ from playsound import playsound
 from streamlit_chat import message
 
 from advisor.agents import init_convo_agent
+from agent.assistant import Assistant, AssistantResponse
 
 langchain.debug = True
 
@@ -35,17 +37,16 @@ def init():
 
 def setup_agent():
     if 'agent' not in st.session_state:
-        random_session_id = str(uuid.uuid4())
-        st.session_state.agent = init_convo_agent(random_session_id)
+        st.session_state.agent = Assistant()
 
 
 def get_response_from_ai(human_input):
     setup_agent()
     print("="*20)
     with get_openai_callback() as cb:
-        result = st.session_state.agent.run(human_input)
+        result: Optional[AssistantResponse] = st.session_state.agent.run(human_input)
         print("Cost:", cb)
-        return result
+        return result.reply if result else "Sorry, something went wrong."
 
 
 def get_voice_message(message):
