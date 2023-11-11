@@ -1,9 +1,13 @@
 # ai-llm-playground
-Experiments with Langchain, OpenAI API, Embedding, and Agents
+Experiments with Langchain, OpenAI API, Embedding, and Agents.
 
 # Projects
 
-### Restaurant Advisor
+### Restaurant Advisor (OpenAI Assistant version)
+
+It's the same as the [Restaurant Advisor (outdated Langchain + Redis version)](#restaurant_advisor) project but it uses the new OpenAI Assistant API with the new `GPT-4 Turbo` model. It doesn't need Redis to keep the conversation history because OpenAI Threads can do the same. No need to resend an entire conversation history back and forth in every message, it is kept on the OpenAI side. Thus, only the last message can be sent which reduced the traffic a lot. Another benefit of this version is that it's native OpenAI API which uses the latest models and I have full control over the execution.
+
+### <a name="restaurant_advisor"></a>Restaurant Advisor (outdated Langchain + Redis version)
 
 This chatbot is aware of restaurant database in MongoDB and is capable of finding the best one nearby. It combines vector semantic search with geo-location MongoDb Atlas Index search. It keeps the chatbot conversation history in Redis. It is quite awesome, the most advanced AI project I did so far.
 

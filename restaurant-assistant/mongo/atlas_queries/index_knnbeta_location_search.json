@@ -1,0 +1,24 @@
+[
+  {
+    "$search": {
+      "index": "vector_geo_index",
+      "knnBeta": {
+        "vector": [0.0074569888369656655,-0.007815497727610423,2.5729646292285237e-05],
+        "path": "embedding",
+        "k": 2,
+        "filter": {
+          "geoWithin": {
+            "circle": {
+              "center": {
+                "type": "Point",
+                "coordinates": [-82.35661756427363, 28.169407931483935]
+              },
+              "radius": 1600
+            },
+            "path": "location"
+          }
+        }
+      }
+    }
+  }
+]

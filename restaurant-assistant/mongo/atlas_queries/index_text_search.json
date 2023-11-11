@@ -1,0 +1,11 @@
+[
+  {
+    "$search": {
+      "index": "vector_geo_index",
+      "text": {
+        "query": "sushi",
+        "path": "text"
+      }
+    }
+  }
+]

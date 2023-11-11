@@ -1,0 +1,17 @@
+[
+  {
+    "$search": {
+      "index": "vector_geo_index",
+      "geoWithin": {
+        "circle": {
+          "center": {
+            "type": "Point",
+            "coordinates": [-82.35661756427363, 28.169407931483935]
+          },
+          "radius": 1600
+        },
+        "path": "location"
+      }
+    }
+  }
+]

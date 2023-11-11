@@ -1,0 +1,11 @@
+[
+  {
+    "$vectorSearch": {
+      "index": "vector_geo_index",
+      "path": "embedding",
+      "numCandidates": 10,
+      "limit": 2,
+      "queryVector": [0.0074569888369656655,-0.007815497727610423,2.5729646292285237e-05]
+    }
+  }
+]
