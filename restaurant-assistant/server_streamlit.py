@@ -11,6 +11,7 @@ from playsound import playsound
 from streamlit_chat import message
 
 from agent.assistant import Assistant, AssistantResponse
+from agent.voicer import Voicer
 
 langchain.debug = True
 
@@ -36,6 +37,7 @@ def init():
 def setup_agent():
     if 'agent' not in st.session_state:
         st.session_state.agent = Assistant()
+        st.session_state.voicer = Voicer()
 
 
 def get_response_from_ai(human_input):
@@ -93,6 +95,7 @@ def main():
             message(msg.content, is_user=True, avatar_style="thumbs", key=str(i) + "_user")
         else:
             message(msg.content, is_user=False, avatar_style="avataaars", key=str(i) + "_ai")
+    st.session_state.voicer.play_last_message()
 
 
 if __name__ == "__main__":

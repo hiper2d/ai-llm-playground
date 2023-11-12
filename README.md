@@ -46,6 +46,8 @@ Here I use vector database to store txt documents' content. Langchain with `stuf
 
 # Setup
 
+Rename the [.env.template](.env.template) file into `.env` and fill in the values.
+
 ### Pipenv setup
 
 I use `pipenv` to manage dependencies. Install it, create a virtual environment, activate it and install dependencies.
