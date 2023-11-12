@@ -1,13 +1,10 @@
-import os
 from typing import Optional
 
 import langchain
-import requests
 import streamlit as st
 from dotenv import load_dotenv, find_dotenv
 from langchain.callbacks import get_openai_callback
 from langchain.schema import HumanMessage, AIMessage
-from playsound import playsound
 from streamlit_chat import message
 
 from agent.assistant import Assistant, AssistantResponse
@@ -49,30 +46,6 @@ def get_response_from_ai(human_input):
         return result.reply if result else "Sorry, something went wrong."
 
 
-def get_voice_message(message):
-    payload = {
-        "text": message,
-        "model_id": "eleven_monolingual_v1",
-        "voice_settings": {
-            "stability": 0,
-            "similarity_boost": 0,
-        }
-    }
-
-    headers = {
-        "accept": "audio/mpeg",
-        "xi-api-key": os.getenv("ELEVEN_LABS_API_KEY"),
-        "Content-Type": "application/json"
-    }
-
-    response = requests.post('https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM?optimize_streaming_latency=0', json=payload, headers=headers)
-    if response.status_code == 200 and response.content:
-        with open("audio.mp3", "wb") as f:
-            f.write(response.content)
-        playsound("audio.mp3")
-        return response.content
-
-
 def main():
     init()
 
@@ -82,11 +55,11 @@ def main():
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
+    response = None
     if user_input:
         st.session_state.messages.append(HumanMessage(content=user_input))
         with st.spinner("Thinking..."):
             response = get_response_from_ai(user_input)
-            # get_voice_message(response)
             st.session_state.messages.append(AIMessage(content=response))
 
     messages = st.session_state.get('messages', [])
@@ -95,7 +68,10 @@ def main():
             message(msg.content, is_user=True, avatar_style="thumbs", key=str(i) + "_user")
         else:
             message(msg.content, is_user=False, avatar_style="avataaars", key=str(i) + "_ai")
-    st.session_state.voicer.play_last_message()
+
+    # Voice generation is disabled for now because I haven't figured out if it is needed yet
+    # if response and len(response) < 300:
+    #    st.session_state.voicer.text_to_speech(response)
 
 
 if __name__ == "__main__":

@@ -20,3 +20,4 @@ class Voicer:
             input=input
         )
         response.stream_to_file(self.speech_file_path)
+        playsound(self.speech_file_path)

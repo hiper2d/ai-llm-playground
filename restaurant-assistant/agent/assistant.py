@@ -4,23 +4,27 @@ from typing import List, Optional
 from dotenv import load_dotenv, find_dotenv
 from openai import OpenAI
 
-from agent.tools import MongoDbSearchTool
+from agent.tools.image_generator import ImageGenerator
+from agent.tools.mongo_searcher import MongoSearcher
 
-ASSISTANT_PROMPT = """You are a restaurant advisor, your goal is to find the best restaurant and dishes for the user.
-As a restaurant advisor, you know the user's location. Restaurant advisor must never ask for a user address or location."""
+ASSISTANT_PROMPT = """You are a restaurant advisor, your goal is to find the best restaurant and dishes for the user. \
+As a restaurant advisor, you know the user's location. Restaurant advisor must never ask for a user address or location. \
+If you show an image markdown, make sure it has 300x300 resolution."""
 
 
 class AssistantResponse:
-    def __init__(self, reply: str, restaurant_ids: List[str] = None):
+    def __init__(self, reply: str, restaurant_ids: List[str] = None, image_url: str = None):
         self.reply = reply
         self.restaurant_ids = restaurant_ids
+        self.image_url = image_url
 
 
 class Assistant:
     def __init__(self):
         self.client = OpenAI()
         # print(self.client.models.list())
-        self.mongo_search_tool = MongoDbSearchTool()
+        self.mongo_search_tool = MongoSearcher()
+        self.image_generator = ImageGenerator()
 
         self.assistant = self.client.beta.assistants.create(
             name="Restaurant Advisor",
@@ -38,7 +42,21 @@ class Assistant:
                         "required": ["query"]
                     }
                 }
-            }],
+            },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "generateImage",
+                        "description": "Generate an image of a dish by description. Useful when a user wants to see the dish before ordering it.",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "description": {"type": "string", "description": "The detailed description of the dish"},
+                            },
+                            "required": ["description"]
+                        }
+                    }
+                }],
             model="gpt-4-1106-preview"
         )
         self.thread = self.client.beta.threads.create()
@@ -74,14 +92,12 @@ class Assistant:
                 messages = self.client.beta.threads.messages.list(
                     thread_id=self.thread.id
                 )
-                print(f"There are {len(messages.data)} messaged in the thread")
                 # Loop through messages and print content based on role
                 msg = messages.data[0]
                 role = msg.role
                 content = msg.content[0].text.value
                 print(f"{role.capitalize()}: {content}")
                 return AssistantResponse(content, restaurant_ids)
-                break
             elif run_status.status == 'requires_action':
                 print("Function Calling")
                 required_actions = run_status.required_action.submit_tool_outputs.model_dump()
@@ -100,6 +116,13 @@ class Assistant:
                             output += f"Option {counter}. {result['description']}\n"
                             restaurant_ids.append(result['restaurant_id'])
                             counter += 1
+                        tool_outputs.append({
+                            "tool_call_id": action['id'],
+                            "output": output
+                        })
+                    elif func_name == "generateImage":
+                        generated_image_url = self.image_generator.generate_image(description=arguments['description'])
+                        output = f"Here is the image of the dish: {generated_image_url}"
                         tool_outputs.append({
                             "tool_call_id": action['id'],
                             "output": output

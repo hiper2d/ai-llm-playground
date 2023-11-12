@@ -5,7 +5,23 @@ Experiments with Langchain, OpenAI API, Embedding, and Agents.
 
 ### Restaurant Advisor (OpenAI Assistant version)
 
-It's the same as the [Restaurant Advisor (outdated Langchain + Redis version)](#restaurant_advisor) project but it uses the new OpenAI Assistant API with the new `GPT-4 Turbo` model. It doesn't need Redis to keep the conversation history because OpenAI Threads can do the same. No need to resend an entire conversation history back and forth in every message, it is kept on the OpenAI side. Thus, only the last message can be sent which reduced the traffic a lot. Another benefit of this version is that it's native OpenAI API which uses the latest models and I have full control over the execution.
+This is the continuations of the [Restaurant Advisor (outdated Langchain + Redis version)](#restaurant_advisor) project.
+I decided to get rid of Langchain and switch to the native OpenAI API. There are few reasons for this:
+- OpenAI API now supports agents out of the box (Assistants + Threads). This is basically all I need in my development
+- I prefer controllable low level solutions over magical boxes. It is hard to override standard LangChain Agent's behaviour (prompts, output parsers) when you face some limitations. I found it easier and more flexible to write my own custom code rather than using predefined retrieval tools. 
+- I got tired of dealing with issues after updating GPT models and libraries
+
+So, It's pure OpenAI API now.
+
+- I use an Assistant API with custom tools: vector semantic search with location pre-filtering (MongoDb Atlas) and image generation (DALL-E 3)
+- I don't need Redis for conversation history anymore because OpenAI Threads can do the same
+- I use the latest `GPT-4 Turbo` model
+- I use OpenAI voice generation
+
+The code of this project is the Assistant that is able to
+- keep the conversation with the user
+- understand when it can use the Restaurant search in MongoDb and use the result to continue the conversation
+- generate images of dishes by descriptions using DALL-E 3 and show them to the user 
 
 ### <a name="restaurant_advisor"></a>Restaurant Advisor (outdated Langchain + Redis version)
 

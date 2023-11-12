@@ -6,7 +6,7 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
 
-class MongoDbSearchTool:
+class MongoSearcher:
     # user_location: (longitude, latitude)
     # search_radius: in meters
     #
