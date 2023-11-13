@@ -5,7 +5,7 @@ Experiments with Langchain, OpenAI API, Embedding, and Agents.
 
 ### Restaurant Advisor (OpenAI Assistant version)
 
-This is the continuations of the [Restaurant Advisor (outdated Langchain + Redis version)](#restaurant_advisor) project.
+This is the continuation of the [Restaurant Advisor (outdated Langchain + Redis version)](#restaurant_advisor) project.
 I decided to get rid of Langchain and switch to the native OpenAI API. There are few reasons for this:
 - OpenAI API now supports agents out of the box (Assistants + Threads). This is basically all I need in my development
 - I prefer controllable low level solutions over magical boxes. It is hard to override standard LangChain Agent's behaviour (prompts, output parsers) when you face some limitations. I found it easier and more flexible to write my own custom code rather than using predefined retrieval tools. 
