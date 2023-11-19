@@ -11,6 +11,8 @@ langchain.debug = True
 
 app = Flask(__name__)
 
+# todo: This Flask app is not functional yet. I need to update it to use the new Assistant class.
+
 
 def initialize():
     load_dotenv(find_dotenv())

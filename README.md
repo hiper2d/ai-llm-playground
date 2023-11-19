@@ -18,7 +18,7 @@ So, It's pure OpenAI API now.
 - I use the latest `GPT-4 Turbo` model
 - I use OpenAI voice generation
 
-The code of this project is the Assistant that is able to
+The core of this project is the Assistant that is capable of the following:
 - keep the conversation with the user
 - understand when it can use the Restaurant search in MongoDb and use the result to continue the conversation
 - generate images of dishes by descriptions using DALL-E 3 and show them to the user
