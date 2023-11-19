@@ -8,8 +8,19 @@ from agent.tools.image_generator import ImageGenerator
 from agent.tools.mongo_searcher import MongoSearcher
 
 ASSISTANT_PROMPT = """You are a restaurant advisor, your goal is to find the best restaurant and dishes for the user. \
-As a restaurant advisor, you know the user's location. Restaurant advisor must never ask for a user address or location. \
-If you show an image markdown, make sure it has 300x300 resolution."""
+As a restaurant advisor, you know the user's location. Don't format the answer. Don't use lists. \
+You only allowed to use new lines."""
+
+VECTOR_SEARCH_PROMPT = """Search for restaurant and restaurant menu information by restaurant or dish description. \
+Respond using a JSON with restaurant_description and restaurant_id fields."""
+
+VECTOR_SEARCH_PARAM_PROMPT = "The query to search for restaurants by restaurant or dish description."
+
+IMAGE_GENERATOR_PROMPT = """Generate an image of a dish by description. \
+Useful when a user wants to see the dish before ordering it.\
+Use this tool only if a user asks for an image of a dish."""
+
+IMAGE_GENERATOR_PARAM_PROMPT = "The detailed description of the dish."
 
 
 class AssistantResponse:
@@ -33,11 +44,11 @@ class Assistant:
                 "type": "function",
                 "function": {
                     "name": "searchForRestaurants",
-                    "description": "Search for restaurant and restaurant menu information",
+                    "description": VECTOR_SEARCH_PROMPT,
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "query": {"type": "string", "description": "The query to search for restaurants"},
+                            "query": {"type": "string", "description": VECTOR_SEARCH_PARAM_PROMPT},
                         },
                         "required": ["query"]
                     }
@@ -47,11 +58,11 @@ class Assistant:
                     "type": "function",
                     "function": {
                         "name": "generateImage",
-                        "description": "Generate an image of a dish by description. Useful when a user wants to see the dish before ordering it.",
+                        "description": IMAGE_GENERATOR_PROMPT,
                         "parameters": {
                             "type": "object",
                             "properties": {
-                                "description": {"type": "string", "description": "The detailed description of the dish"},
+                                "description": {"type": "string", "description": IMAGE_GENERATOR_PARAM_PROMPT},
                             },
                             "required": ["description"]
                         }
@@ -73,8 +84,8 @@ class Assistant:
             thread_id=self.thread.id,
             assistant_id=self.assistant.id
         )
-        print("Running assistant...")
-        print(run.model_dump_json(indent=4))
+        print(f"Running assistant with prompt {ASSISTANT_PROMPT}")
+        # print(run.model_dump_json(indent=4))
 
         restaurant_ids = []
         while True:
@@ -116,13 +127,17 @@ class Assistant:
                             output += f"Option {counter}. {result['description']}\n"
                             restaurant_ids.append(result['restaurant_id'])
                             counter += 1
+                        output += "Don't format the answer. Don't use lists. You only allowed to use new lines."
                         tool_outputs.append({
                             "tool_call_id": action['id'],
                             "output": output
                         })
                     elif func_name == "generateImage":
                         generated_image_url = self.image_generator.generate_image(description=arguments['description'])
-                        output = f"Here is the image of the dish: {generated_image_url}"
+                        print(f"Generated image url: {generated_image_url} by description: {arguments['description']}")
+                        output = f"Here is the image of the dish: {generated_image_url}. \
+                        Include it into your reply as a simple URL without any formatting. \
+                        Add a description so the user can understand what is on the image."
                         tool_outputs.append({
                             "tool_call_id": action['id'],
                             "output": output

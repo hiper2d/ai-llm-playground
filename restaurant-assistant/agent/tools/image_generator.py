@@ -18,4 +18,4 @@ class ImageGenerator:
 
 if __name__ == "__main__":
     drawer = ImageGenerator()
-    print(drawer.generate_image("a drawing of a cat. it should have a short fur, be black and white with eyes of different color: green and blue"))
+    print(drawer.generate_image("A drawing of a cat. It has black and white short fur, and eyes of different color: green and blue"))
