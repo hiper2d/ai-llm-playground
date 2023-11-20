@@ -1,26 +1,14 @@
 import time
+import json
 from typing import List, Optional
 
 from dotenv import load_dotenv, find_dotenv
 from openai import OpenAI
 
+from agent.prompts import ASSISTANT_PROMPT, TOOL_VECTOR_SEARCH_PROMPT, TOOL_VECTOR_SEARCH_ARGUMENTS, \
+    TOOL_IMAGE_GENERATOR_PROMPT, TOOL_IMAGE_GENERATOR_ARGUMENTS, TOOL_VECTOR_SEARCH_OUTPUT, TOOL_IMAGE_GENERATOR_OUTPUT
 from agent.tools.image_generator import ImageGenerator
 from agent.tools.mongo_searcher import MongoSearcher
-
-ASSISTANT_PROMPT = """You are a restaurant advisor, your goal is to find the best restaurant and dishes for the user. \
-As a restaurant advisor, you know the user's location. Don't format the answer. Don't use lists. \
-You only allowed to use new lines."""
-
-VECTOR_SEARCH_PROMPT = """Search for restaurant and restaurant menu information by restaurant or dish description. \
-Respond using a JSON with restaurant_description and restaurant_id fields."""
-
-VECTOR_SEARCH_PARAM_PROMPT = "The query to search for restaurants by restaurant or dish description."
-
-IMAGE_GENERATOR_PROMPT = """Generate an image of a dish by description. \
-Useful when a user wants to see the dish before ordering it.\
-Use this tool only if a user asks for an image of a dish."""
-
-IMAGE_GENERATOR_PARAM_PROMPT = "The detailed description of the dish."
 
 
 class AssistantResponse:
@@ -44,11 +32,11 @@ class Assistant:
                 "type": "function",
                 "function": {
                     "name": "searchForRestaurants",
-                    "description": VECTOR_SEARCH_PROMPT,
+                    "description": TOOL_VECTOR_SEARCH_PROMPT,
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "query": {"type": "string", "description": VECTOR_SEARCH_PARAM_PROMPT},
+                            "query": {"type": "string", "description": TOOL_VECTOR_SEARCH_ARGUMENTS},
                         },
                         "required": ["query"]
                     }
@@ -58,11 +46,11 @@ class Assistant:
                     "type": "function",
                     "function": {
                         "name": "generateImage",
-                        "description": IMAGE_GENERATOR_PROMPT,
+                        "description": TOOL_IMAGE_GENERATOR_PROMPT,
                         "parameters": {
                             "type": "object",
                             "properties": {
-                                "description": {"type": "string", "description": IMAGE_GENERATOR_PARAM_PROMPT},
+                                "description": {"type": "string", "description": TOOL_IMAGE_GENERATOR_ARGUMENTS},
                             },
                             "required": ["description"]
                         }
@@ -84,7 +72,7 @@ class Assistant:
             thread_id=self.thread.id,
             assistant_id=self.assistant.id
         )
-        print(f"Running assistant with prompt {ASSISTANT_PROMPT}")
+        print(f"Running assistant with the following prompt: {ASSISTANT_PROMPT}")
         # print(run.model_dump_json(indent=4))
 
         restaurant_ids = []
@@ -103,41 +91,49 @@ class Assistant:
                 messages = self.client.beta.threads.messages.list(
                     thread_id=self.thread.id
                 )
-                # Loop through messages and print content based on role
                 msg = messages.data[0]
                 role = msg.role
                 content = msg.content[0].text.value
                 print(f"{role.capitalize()}: {content}")
-                return AssistantResponse(content, restaurant_ids)
+                try:
+                    content_json = json.loads(content)
+                    reply = content_json["reply"] if "reply" in content_json else content
+                    restaurant_ids = content_json["restaurant_ids"] if "restaurant_ids" in content_json else []
+                    image_url = content_json["image_url"] if "image_url" in content_json else None
+                    return AssistantResponse(reply=reply, restaurant_ids=restaurant_ids, image_url=image_url)
+                except:
+                    return AssistantResponse(content, [], None)
+
             elif run_status.status == 'requires_action':
                 print("Function Calling")
                 required_actions = run_status.required_action.submit_tool_outputs.model_dump()
                 print(required_actions)
                 tool_outputs = []
-                import json
+
                 for action in required_actions["tool_calls"]:
                     func_name = action['function']['name']
                     arguments = json.loads(action['function']['arguments'])
 
                     if func_name == "searchForRestaurants":
                         search_result = self.mongo_search_tool.search(query=arguments['query'])
-                        output = "There few restaurants that match your query:\n"
-                        counter = 1
-                        for result in search_result:
-                            output += f"Option {counter}. {result['description']}\n"
+                        options = []
+                        for i, result in enumerate(search_result):
+                            options.append(f"Option {i}: {result['description']}.\nRestaurant Id: {result['restaurant_id']}")
                             restaurant_ids.append(result['restaurant_id'])
-                            counter += 1
-                        output += "Don't format the answer. Don't use lists. You only allowed to use new lines."
+                        output = TOOL_VECTOR_SEARCH_OUTPUT.format(options='\n'.join(options))
+                        print(f"MongoDB vector search result: {output}")
                         tool_outputs.append({
                             "tool_call_id": action['id'],
                             "output": output
                         })
                     elif func_name == "generateImage":
-                        generated_image_url = self.image_generator.generate_image(description=arguments['description'])
-                        print(f"Generated image url: {generated_image_url} by description: {arguments['description']}")
-                        output = f"Here is the image of the dish: {generated_image_url}. \
-                        Include it into your reply as a simple URL without any formatting. \
-                        Add a description so the user can understand what is on the image."
+                        try:
+                            generated_image_url = self.image_generator.generate_image(description=arguments['description'])
+                            print(f"Generated image url: {generated_image_url} by description: {arguments['description']}")
+                            output = TOOL_IMAGE_GENERATOR_OUTPUT.format(generated_image_url=generated_image_url)
+                        except Exception as e:
+                            print(e)
+                            output = "Request has been rejected by the safety system. Please try again with a different query."
                         tool_outputs.append({
                             "tool_call_id": action['id'],
                             "output": output
@@ -154,7 +150,6 @@ class Assistant:
             else:
                 print("Waiting for the Assistant to process...")
                 time.sleep(1)
-        return None
 
 
 if __name__ == "__main__":

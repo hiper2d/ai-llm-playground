@@ -20,14 +20,14 @@ So, It's pure OpenAI API now.
 
 The core of this project is the Assistant that is capable of the following:
 - keep the conversation with the user
-- understand when it can use the Restaurant search in MongoDb and use the result to continue the conversation
-- generate images of dishes by descriptions using DALL-E 3 and show them to the user
+- understand when it can use the Restaurant vector search in MongoDb and use the result to continue the conversation
+- understand when to generate images of dishes by descriptions using DALL-E 3
 
-![advisor-1.png](images/advisor-1.png)
+![advisor-chat-example.png](images/advisor-chat-example-1.png)
 
 Example of the generated image:
 
-<img src="images/advisor-2.png" width="200" />
+<img src="images/advisor-dish-example-1.png" width="200" />
 
 ### <a name="restaurant_advisor"></a>Restaurant Advisor (outdated Langchain + Redis version)
 

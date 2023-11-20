@@ -1,16 +1,24 @@
-from typing import Optional
+from typing import Optional, Literal
 
 import langchain
 import streamlit as st
 from dotenv import load_dotenv, find_dotenv
 from langchain.callbacks import get_openai_callback
-from langchain.schema import HumanMessage, AIMessage
+from langchain.schema import HumanMessage, AIMessage, BaseMessage
 from streamlit_chat import message
 
 from agent.assistant import Assistant, AssistantResponse
 from agent.voicer import Voicer
 
 langchain.debug = True
+
+
+class AIMessageImage(BaseMessage):
+    """A Message from an AI."""
+
+    example: bool = False
+
+    type: Literal["ai_img"] = "ai_img"
 
 
 def init():
@@ -43,7 +51,7 @@ def get_response_from_ai(human_input):
     with get_openai_callback() as cb:
         result: Optional[AssistantResponse] = st.session_state.agent.run(human_input)
         print("Cost:", cb)
-        return result.reply if result else "Sorry, something went wrong."
+        return result
 
 
 def main():
@@ -55,19 +63,23 @@ def main():
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    response = None
+    img = None
     if user_input:
         st.session_state.messages.append(HumanMessage(content=user_input))
         with st.spinner("Thinking..."):
             response = get_response_from_ai(user_input)
-            st.session_state.messages.append(AIMessage(content=response))
+            st.session_state.messages.append(AIMessage(content=response.reply))
+            if response.image_url:
+                st.session_state.messages.append(AIMessageImage(content=response.image_url))
 
     messages = st.session_state.get('messages', [])
     for i, msg in enumerate(messages):
-        if i % 2 == 0:
+        if msg.type == "human":
             message(msg.content, is_user=True, avatar_style="thumbs", key=str(i) + "_user")
-        else:
+        elif msg.type == "ai":
             message(msg.content, is_user=False, avatar_style="avataaars", key=str(i) + "_ai")
+        elif msg.type == "ai_img":
+            st.image(msg.content, use_column_width=True)
 
     # Voice generation is disabled for now because I haven't figured out if it is needed yet
     # if response and len(response) < 300:
