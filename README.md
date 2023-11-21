@@ -19,15 +19,16 @@ So, It's pure OpenAI API now.
 - I use OpenAI voice generation
 
 The core of this project is the Assistant that is capable of the following:
-- keep the conversation with the user
-- understand when it can use the Restaurant vector search in MongoDb and use the result to continue the conversation
-- understand when to generate images of dishes by descriptions using DALL-E 3
+- keep the conversation with the user, suggest restaurants and dishes from the database
+- understand when to query the database and come up with queries to find the best restaurants nearby and use the result in the conversation
+- understand when a user wants to see a particular dish and generate an image of it using DALL-E 3
+- reliably reply in JSON format even though Assistant API doesn't support the JSON output format
 
 ![advisor-chat-example.png](images/advisor-chat-example-1.png)
 
-Example of the generated image:
+Example of the generated images:
 
-<img src="images/advisor-dish-example-1.png" width="200" />
+<img src="images/advisor-dish-example-1.png" width="200" /> <img src="images/advisor-dish-example-3.png" width="200" />  <img src="images/advisor-dish-example-2.png" width="200" />
 
 ### <a name="restaurant_advisor"></a>Restaurant Advisor (outdated Langchain + Redis version)
 
