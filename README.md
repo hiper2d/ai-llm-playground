@@ -1,9 +1,7 @@
 # ai-llm-playground
 Experiments with Langchain, OpenAI API, Embedding, and Agents.
 
-# Projects
-
-### Restaurant Advisor (OpenAI Assistant version)
+# Restaurant Advisor (OpenAI Assistant version)
 
 This is the continuation of the [Restaurant Advisor (outdated Langchain + Redis version)](#restaurant_advisor) project.
 I decided to get rid of Langchain and switch to the native OpenAI API. There are few reasons for this:
@@ -18,7 +16,7 @@ So, It's pure OpenAI API now.
 - I use the latest `GPT-4 Turbo` model
 - I use OpenAI voice generation
 
-The core of this project is the Assistant that is capable of the following:
+The core of this project is the Assistant with few tools. It is capable of doing the following:
 - keep the conversation with the user, suggest restaurants and dishes from the database
 - understand when to query the database and come up with queries to find the best restaurants nearby and use the result in the conversation
 - understand when a user wants to see a particular dish and generate an image of it using DALL-E 3
@@ -26,11 +24,14 @@ The core of this project is the Assistant that is capable of the following:
 
 ![advisor-chat-example.png](images/advisor-chat-example-1.png)
 
-Example of the generated images:
+Examples of the generated images during a conversation:
 
 <img src="images/advisor-dish-example-1.png" width="200" /> <img src="images/advisor-dish-example-3.png" width="200" />  <img src="images/advisor-dish-example-2.png" width="200" />
 
-### <a name="restaurant_advisor"></a>Restaurant Advisor (outdated Langchain + Redis version)
+I'll add more details about how to create the database with indexes in MongoDb Atlas and how to deploy this to AWS later.
+I plan to create some architectural diagrams as well. Even thought there is not so much to architect here, but still. There are tools and some tricks with location pre-filtering which require some explanation to those who want to do the same.
+
+# <a name="restaurant_advisor"></a>Restaurant Advisor (outdated Langchain + Redis version)
 
 This chatbot is aware of restaurant database in MongoDB and is capable of finding the best one nearby. It combines vector semantic search with geo-location MongoDb Atlas Index search. It keeps the chatbot conversation history in Redis. It is quite awesome, the most advanced AI project I did so far.
 
@@ -52,7 +53,7 @@ Then start the Python application as usual (see below).
 
 ![restaurant-advisor.png](images/restaurant-advisor.png)
 
-### AI Girlfriend
+# AI Girlfriend
 
 Okay, this is not actually a girlfriend but more like an interesting person with some technical background. At first, I took some custom prompts for chatbots with AI-girlfriend personality from [FlowGPT](https://flowgpt.com/). But they all were either anime or virtual sex oriented (usually both) which I found rather boring. I came up with my own prompt that focuses on making the chatbot more alive and natural. I prohibited her to mention that she is an AI and gave some background in engineering so she is quite nerdy. I also tried to make her more open-minded that a regular Chat GPT, therefore she has some temper and can even insult you (she called me stupid once). She can talk using AI-generated voice which is very impressive. 
 
@@ -61,7 +62,7 @@ I use the [Elevenlabs](https://elevenlabs.io/speech-synthesis) API (which is fre
 
 ![ai-girlfriend.png](images/ai-girlfriend.png)
 
-### Chat with Multiple Documents
+# Chat with Multiple Documents
 
 Here I use vector database to store txt documents' content. Langchain with `stuff` chain type allows to query this store and use it in chatting with llm
 
