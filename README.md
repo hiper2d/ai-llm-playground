@@ -1,9 +1,17 @@
 # ai-llm-playground
-Experiments with Langchain, OpenAI API, Embedding, and Agents.
+Experiments with OpenAI Assistant API, Langchain, Embedding, and Agents
 
-# Restaurant Advisor (OpenAI Assistant version)
+### Table of content
+- [Restaurant Advisor (OpenAI Assistant version)](#restaurant_advisor)
+- [Chat with PDF documents using OpenAI Assistant API](#chat_with_pdf)
+- [Restaurant Advisor (Outdated Langchain + Redis version)](#restaurant_advisor_langchain)
+- [AI Girlfriend](#ai_girlfriend)
+- [Chat with Multiple Documents (Outdated Langchain version)](#chat_with_pdf_langchain)
+- [Setup](#setup)
 
-This is the continuation of the [Restaurant Advisor (outdated Langchain + Redis version)](#restaurant_advisor) project.
+# <a id="restaurant_advisor"></a>Restaurant Advisor (OpenAI Assistant version)
+
+This is the continuation of the [Restaurant Advisor (outdated Langchain + Redis version)](#restaurant_advisor_langchain) project.
 I decided to get rid of Langchain and switch to the native OpenAI API. There are few reasons for this:
 - OpenAI API now supports agents out of the box (Assistants + Threads). This is basically all I need in my development
 - I prefer controllable low level solutions over magical boxes. It is hard to override standard LangChain Agent's behaviour (prompts, output parsers) when you face some limitations. I found it easier and more flexible to write my own custom code rather than using predefined retrieval tools. 
@@ -31,7 +39,17 @@ Examples of the generated images during a conversation:
 I'll add more details about how to create the database with indexes in MongoDb Atlas and how to deploy this to AWS later.
 I plan to create some architectural diagrams as well. Even thought there is not so much to architect here, but still. There are tools and some tricks with location pre-filtering which require some explanation to those who want to do the same.
 
-# <a name="restaurant_advisor"></a>Restaurant Advisor (outdated Langchain + Redis version)
+# <a id="chat_with_pdf"></a>Chat with PDF documents using OpenAI Assistant API
+
+This is a better version of the [Chat with Multiple Documents (Outdated Langchain version)](#chat_with_pdf_langchain) because it uses native OpenAI API and Assistant API with the latest model. No need to parse PDFs manually and upload their text content into vector stores. It is all done on the OpenAI side
+
+![summarizer_1](images/summarize/summarizer_1.png)
+
+THis agent wants to be convinced:
+
+![summarizer_2](images/summarize/summarizer_2.png)
+
+# <a id="restaurant_advisor_langchain"></a>Restaurant Advisor (Outdated Langchain + Redis version)
 
 This chatbot is aware of restaurant database in MongoDB and is capable of finding the best one nearby. It combines vector semantic search with geo-location MongoDb Atlas Index search. It keeps the chatbot conversation history in Redis. It is quite awesome, the most advanced AI project I did so far.
 
@@ -53,7 +71,7 @@ Then start the Python application as usual (see below).
 
 ![restaurant-advisor.png](images/restaurant-advisor.png)
 
-# AI Girlfriend
+# <a id="ai_girlfriend"></a>AI Girlfriend
 
 Okay, this is not actually a girlfriend but more like an interesting person with some technical background. At first, I took some custom prompts for chatbots with AI-girlfriend personality from [FlowGPT](https://flowgpt.com/). But they all were either anime or virtual sex oriented (usually both) which I found rather boring. I came up with my own prompt that focuses on making the chatbot more alive and natural. I prohibited her to mention that she is an AI and gave some background in engineering so she is quite nerdy. I also tried to make her more open-minded that a regular Chat GPT, therefore she has some temper and can even insult you (she called me stupid once). She can talk using AI-generated voice which is very impressive. 
 
@@ -62,7 +80,7 @@ I use the [Elevenlabs](https://elevenlabs.io/speech-synthesis) API (which is fre
 
 ![ai-girlfriend.png](images/ai-girlfriend.png)
 
-# Chat with Multiple Documents
+# <a id="chat_with_pdf_langchain"></a> Chat with Multiple Documents (Outdated Langchain version)
 
 Here I use vector database to store txt documents' content. Langchain with `stuff` chain type allows to query this store and use it in chatting with llm
 

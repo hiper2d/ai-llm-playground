@@ -5,11 +5,11 @@ name = "pypi"
 
 [packages]
 flask = "*"
+faiss-cpu = "*"
 python-dotenv = "*"
 langchain = "*"
 openai = "1.2.0"
 pydantic = "*"
-streamlit = "*"
 streamlit-chat = "*"
 chromadb = "*"
 tiktoken = "*"
@@ -17,7 +17,7 @@ playsound = "*"
 pyobjc = "*"
 pymongo = "*"
 redis = "*"
-qdrant-client = "*"
+streamlit = "*"
 
 [dev-packages]
 

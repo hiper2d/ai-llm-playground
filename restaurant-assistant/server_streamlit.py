@@ -1,7 +1,7 @@
 from typing import Optional, Literal
 
 import langchain
-import streamlit as st
+import server as st
 from dotenv import load_dotenv, find_dotenv
 from langchain.callbacks import get_openai_callback
 from langchain.schema import HumanMessage, AIMessage, BaseMessage

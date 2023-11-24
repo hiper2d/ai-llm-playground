@@ -1,7 +1,7 @@
 import os
 
 import requests
-import streamlit as st
+import server as st
 from dotenv import find_dotenv, load_dotenv
 from langchain import OpenAI, LLMChain, PromptTemplate
 from langchain.callbacks import get_openai_callback
