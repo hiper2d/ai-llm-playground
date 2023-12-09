@@ -45,7 +45,8 @@ def read_from_page(url):
                     },
                     {
                         "type": "text",
-                        "text": "Extract movies from the screenshot that are in horror (ужасы) or fiction (фантастика) genre. "
+                        "text": "Extract all movies from the screenshot that are in horror (ужасы) "
+                                "or fiction (фантастика) genre. "
                                 "Return a list of all horror and fiction movies on the screenshot with their genres and directors."
                     }
                 ]

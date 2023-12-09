@@ -1,7 +1,7 @@
 from typing import Optional, Literal
 
 import langchain
-import server as st
+import streamlit as st
 from dotenv import load_dotenv, find_dotenv
 from langchain.callbacks import get_openai_callback
 from langchain.schema import HumanMessage, AIMessage, BaseMessage
@@ -9,8 +9,6 @@ from streamlit_chat import message
 
 from agent.assistant import Assistant, AssistantResponse
 from agent.voicer import Voicer
-
-langchain.debug = True
 
 
 class AIMessageImage(BaseMessage):

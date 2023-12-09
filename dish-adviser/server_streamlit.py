@@ -3,7 +3,7 @@ import uuid
 
 import langchain
 import requests
-import server as st
+import streamlit as st
 from dotenv import load_dotenv, find_dotenv
 from langchain.callbacks import get_openai_callback
 from langchain.schema import HumanMessage, AIMessage

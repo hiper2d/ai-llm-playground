@@ -47,6 +47,7 @@ Credits go to [gpt4v-browsing](https://github.com/unconv/gpt4v-browsing) repo as
 Few problems I met:
 - Vision API is not so good at answering questions about the text page content. For some reason, the result is better if you first ask the Vision API to extract some specific text from the screenshot, then ask the Text Completion API to answer to your question using the text from the previous step.
 - Vision API refuses to recognize a lot of text on the page. So it is not possible to ask it to extract all the text. You have to be specific and ask to extract only some text. Ideally, the Vision API prompt should also be constructed out of the original question.
+- Vision API cannot extract all the related text. For example, when i ask to give me all the horror movies it sees on the page, it never gives all of them.
 
 What I have in mind for this project so far:
 - Give a URL and a task to the agent. For example, some cinema site and a task to find a movie to watch tonight.
@@ -56,6 +57,8 @@ What I have in mind for this project so far:
 - I'm going to use the Puppeteer js library to take screenshots and navigate through pages. This might be tricky to integrate a js library into Python code. I'll see how it goes.
 
 More stuff coming later
+
+Project Setup is in a separate [web-scraper/README.md](web-scraper/README.md) file. 
 
 # <a id="chat_with_pdf"></a>Chat with PDF documents using OpenAI Assistant API
 
