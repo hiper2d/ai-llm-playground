@@ -45,9 +45,8 @@ def read_from_page(url):
                     },
                     {
                         "type": "text",
-                        "text": "Extract the following information from this screenshot: "
-                                "the layout of the page (navigation menus etc.) and the content on the page. "
-                                "Details about Sam Altman's birth date and age."
+                        "text": "Extract movies from the screenshot that are in horror (ужасы) or fiction (фантастика) genre. "
+                                "Return a list of all horror and fiction movies on the screenshot with their genres and directors."
                     }
                 ]
             }
@@ -59,7 +58,7 @@ def read_from_page(url):
     message_text = message.content
     print(message_text)
 
-    print("User questions: How old is Sam Altman?")
+    print("User questions: What horror movies are there?")
     response = model.chat.completions.create(
         model='gpt-3.5-turbo-1106',
         messages=[
@@ -69,7 +68,7 @@ def read_from_page(url):
             },
             {
                 "role": "user",
-                "content": "How old is Sam Altman?"
+                "content": "What horror movies are there?"
             }
         ],
         max_tokens=2048,
@@ -83,4 +82,4 @@ def read_from_page(url):
 
 
 if __name__ == '__main__':
-    read_from_page("https://en.wikipedia.org/wiki/Sam_Altman")
+    read_from_page("https://rutracker.org/forum/viewforum.php?f=252")
