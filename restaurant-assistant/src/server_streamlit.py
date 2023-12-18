@@ -1,6 +1,5 @@
 from typing import Optional, Literal
 
-import langchain
 import streamlit as st
 from dotenv import load_dotenv, find_dotenv
 from langchain.callbacks import get_openai_callback
