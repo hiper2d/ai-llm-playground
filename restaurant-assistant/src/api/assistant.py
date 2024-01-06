@@ -1,14 +1,13 @@
-import time
 import json
+import time
 from typing import List, Optional
 
 from dotenv import load_dotenv, find_dotenv
 from openai import OpenAI
 
-from agent.prompts import ASSISTANT_PROMPT, TOOL_VECTOR_SEARCH_PROMPT, TOOL_VECTOR_SEARCH_ARGUMENTS, \
-    TOOL_IMAGE_GENERATOR_PROMPT, TOOL_IMAGE_GENERATOR_ARGUMENTS, TOOL_VECTOR_SEARCH_OUTPUT, TOOL_IMAGE_GENERATOR_OUTPUT
-from agent.tools.image_generator import ImageGenerator
-from agent.tools.mongo_searcher import MongoSearcher
+from api.prompts import ASSISTANT_PROMPT, TOOL_VECTOR_SEARCH_OUTPUT, TOOL_IMAGE_GENERATOR_OUTPUT
+from api.tools.image_generator import ImageGenerator
+from api.tools.mongo_searcher import MongoSearcher
 
 
 class AssistantResponse:
@@ -16,49 +15,32 @@ class AssistantResponse:
         self.reply = reply
         self.restaurant_ids = restaurant_ids
         self.image_url = image_url
+        self.thread_id = None
 
 
 class Assistant:
-    def __init__(self):
+    def __init__(self, assistant_id: Optional[str] = None, thread_id: Optional[str] = None):
         self.client = OpenAI()
-        # print(self.client.models.list())
+
         self.mongo_search_tool = MongoSearcher()
         self.image_generator = ImageGenerator()
 
-        self.assistant = self.client.beta.assistants.create(
-            name="Restaurant Advisor",
-            instructions=ASSISTANT_PROMPT,
-            tools=[{
-                "type": "function",
-                "function": {
-                    "name": "searchForRestaurants",
-                    "description": TOOL_VECTOR_SEARCH_PROMPT,
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "query": {"type": "string", "description": TOOL_VECTOR_SEARCH_ARGUMENTS},
-                        },
-                        "required": ["query"]
-                    }
-                }
-            },
-                {
-                    "type": "function",
-                    "function": {
-                        "name": "generateImage",
-                        "description": TOOL_IMAGE_GENERATOR_PROMPT,
-                        "parameters": {
-                            "type": "object",
-                            "properties": {
-                                "description": {"type": "string", "description": TOOL_IMAGE_GENERATOR_ARGUMENTS},
-                            },
-                            "required": ["description"]
-                        }
-                    }
-                }],
-            model="gpt-4-1106-preview"
-        )
-        self.thread = self.client.beta.threads.create()
+        if assistant_id:
+            self.assistant = self.client.beta.assistants.retrieve(assistant_id)
+        else:
+            self.assistant = self.client.beta.assistants.create(
+                name="Restaurant Advisor",
+                instructions=ASSISTANT_PROMPT,
+                tools=[
+                    MongoSearcher.get_assistant_definition(), ImageGenerator.get_assistant_definition()
+                ],
+                model="gpt-4-1106-preview"
+            )
+
+        if thread_id:
+            self.thread = self.client.beta.threads.retrieve(thread_id)
+        else:
+            self.thread = self.client.beta.threads.create()
 
     def run(self, user_message) -> Optional[AssistantResponse]:
         # Add a message to the thread

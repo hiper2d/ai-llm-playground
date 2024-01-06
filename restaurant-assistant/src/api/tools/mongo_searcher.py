@@ -5,6 +5,8 @@ from langchain.embeddings import OpenAIEmbeddings
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
+from api.prompts import TOOL_VECTOR_SEARCH_PROMPT, TOOL_VECTOR_SEARCH_ARGUMENTS
+
 
 class MongoSearcher:
     # user_location: (longitude, latitude)
@@ -75,3 +77,20 @@ class MongoSearcher:
                 "description": doc['text'],
             })
         return ans
+
+    @classmethod
+    def get_assistant_definition(cls):
+        return {
+            "type": "function",
+            "function": {
+                "name": "searchForRestaurants",
+                "description": TOOL_VECTOR_SEARCH_PROMPT,
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "query": {"type": "string", "description": TOOL_VECTOR_SEARCH_ARGUMENTS},
+                    },
+                    "required": ["query"]
+                }
+            }
+        }

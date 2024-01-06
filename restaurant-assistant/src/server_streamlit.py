@@ -6,8 +6,8 @@ from langchain.callbacks import get_openai_callback
 from langchain.schema import HumanMessage, AIMessage, BaseMessage
 from streamlit_chat import message
 
-from agent.assistant import Assistant, AssistantResponse
-from agent.voicer import Voicer
+from api.assistant import Assistant, AssistantResponse
+from api.voicer import Voicer
 
 
 class AIMessageImage(BaseMessage):

@@ -1,0 +1,5 @@
+openai==1.2.0
+python-dotenv==1.0.0
+pydantic==2.5.2
+pyobjc==10.0
+pymongo==4.6.0

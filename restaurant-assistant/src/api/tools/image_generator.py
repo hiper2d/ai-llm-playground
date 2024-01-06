@@ -1,5 +1,7 @@
 from openai import OpenAI
 
+from api.prompts import TOOL_IMAGE_GENERATOR_PROMPT, TOOL_IMAGE_GENERATOR_ARGUMENTS
+
 
 class ImageGenerator:
     def __init__(self):
@@ -20,6 +22,23 @@ class ImageGenerator:
             n=1,
         )
         return response.data[0].url
+
+    @classmethod
+    def get_assistant_definition(cls):
+        return {
+            "type": "function",
+            "function": {
+                "name": "generateImage",
+                "description": TOOL_IMAGE_GENERATOR_PROMPT,
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "description": {"type": "string", "description": TOOL_IMAGE_GENERATOR_ARGUMENTS},
+                    },
+                    "required": ["description"]
+                }
+            }
+        }
 
 
 if __name__ == "__main__":
