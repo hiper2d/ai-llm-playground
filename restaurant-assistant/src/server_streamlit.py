@@ -2,7 +2,7 @@ from typing import Optional, Literal
 
 import streamlit as st
 from dotenv import load_dotenv, find_dotenv
-from langchain.callbacks import get_openai_callback
+from langchain_community.callbacks import get_openai_callback
 from langchain.schema import HumanMessage, AIMessage, BaseMessage
 from streamlit_chat import message
 

@@ -2,7 +2,7 @@ import os
 from urllib.parse import quote_plus
 
 from dotenv import load_dotenv
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.tools import Tool
 from langchain.vectorstores import MongoDBAtlasVectorSearch
 from pydantic.v1 import BaseModel

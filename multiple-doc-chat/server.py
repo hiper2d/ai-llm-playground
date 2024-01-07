@@ -1,14 +1,14 @@
 import streamlit as st
 from dotenv import load_dotenv, find_dotenv
-from langchain import HuggingFaceHub
+from langchain_community.callbacks import get_openai_callback
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
-from langchain.embeddings import OpenAIEmbeddings, HuggingFaceInstructEmbeddings
+from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.memory import ConversationBufferMemory
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS
+
 from htmlTemplates import css, bot_template, user_template
-from langchain.callbacks import get_openai_callback
 
 
 def get_text(docs):

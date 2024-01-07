@@ -4,7 +4,7 @@ import requests
 import streamlit as st
 from dotenv import find_dotenv, load_dotenv
 from langchain import OpenAI, LLMChain, PromptTemplate
-from langchain.callbacks import get_openai_callback
+from langchain_community.callbacks import get_openai_callback
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.schema import (
     AIMessage,

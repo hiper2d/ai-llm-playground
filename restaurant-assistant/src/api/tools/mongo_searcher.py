@@ -1,7 +1,7 @@
 import os
 from urllib.parse import quote_plus
 
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_community.embeddings import OpenAIEmbeddings
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
