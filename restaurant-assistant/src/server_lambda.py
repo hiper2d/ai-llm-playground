@@ -22,4 +22,4 @@ if __name__ == '__main__':
             'thread_id': 'thread_nOEbqhH4TSX8gIbeMZ28jbnv'
         }
     }
-    print(lambda_handler(params, None))
+    lambda_handler(params, None)

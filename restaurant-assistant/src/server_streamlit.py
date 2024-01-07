@@ -38,7 +38,8 @@ def init():
 
 def setup_agent():
     if 'agent' not in st.session_state:
-        st.session_state.agent = Assistant()
+        existing_assistant_id = 'asst_Sian9txZgx5Br6ZFiQjBBd1b'  # There is no need to recreate an assistant every time
+        st.session_state.agent = Assistant(assistant_id=existing_assistant_id, thread_id=None)
         st.session_state.voicer = Voicer()
 
 
