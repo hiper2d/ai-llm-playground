@@ -8,7 +8,7 @@ const timeout = 8000;
 
 (async () => {
     const browser = await puppeteer.launch( {
-        headless: "new", // About other options: https://developer.chrome.com/docs/chromium/new-headless
+        headless: false, // About other options: https://developer.chrome.com/docs/chromium/new-headless
     } );
 
     const page = await browser.newPage();
@@ -30,6 +30,9 @@ const timeout = 8000;
         waitUntil: "networkidle0", // Other values: https://pptr.dev/api/puppeteer.page.goforward/#remarks
         timeout: timeout,
     } );
+
+    // Wait for a minute before taking the screenshot
+    await page.waitForTimeout(300_000);
 
     await page.screenshot( {
         path: "screenshot.jpg",

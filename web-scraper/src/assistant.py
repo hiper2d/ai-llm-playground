@@ -83,4 +83,4 @@ def read_from_page(url):
 
 
 if __name__ == '__main__':
-    read_from_page("https://rutracker.org/forum/viewforum.php?f=252")
+    read_from_page("https://chat.openai.com/c/7f53a8f1-a06c-4e63-8806-7087823ab087")
